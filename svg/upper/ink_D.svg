@@ -35,11 +35,12 @@
        inkscape:collect="always"
        xlink:href="#linearGradient9082"
        id="linearGradient12603"
-       x1="-173.85197"
-       y1="203.74344"
-       x2="-157.05032"
-       y2="203.74344"
-       gradientUnits="userSpaceOnUse" />
+       x1="-172.54491"
+       y1="219.70177"
+       x2="-158.73932"
+       y2="219.70177"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-3e-6,-1.73e-6)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -48,9 +49,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.53452208"
-     inkscape:cx="-388.034"
-     inkscape:cy="344.23274"
+     inkscape:zoom="2.1380883"
+     inkscape:cx="-196.84492"
+     inkscape:cy="444.77137"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -62,7 +63,11 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid34132" />
+  </sodipodi:namedview>
   <metadata
      id="metadata3046">
     <rdf:RDF>
@@ -71,7 +76,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -104,16 +109,6 @@
        id="path6730-2"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -158.3767,219.53764 -13.96976,52.13584"
-       id="path1259"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -158.3767,134.87097 -13.96976,52.13585"
-       id="path1259-2"
-       inkscape:connector-curvature="0" />
     <path
        style="fill:url(#linearGradient12603);fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m -172.34646,271.67348 13.60714,-51.97172 0.18899,-83.91072 -13.79613,51.21578 v 84.66666"
