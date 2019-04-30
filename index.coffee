@@ -3,6 +3,14 @@ charKern = 25
 charSpace = 65
 lineKern = 45
 
+maxHeight = {}
+for fontName, subfont of font
+  maxHeight[fontName] = Math.max (
+    for char, letter of subfont
+      letter.height
+  )...
+console.log maxHeight
+
 svg = null
 
 drawLetter = (char, svg, state) ->
@@ -32,11 +40,13 @@ updateText = (changed) ->
         if char of font.folded
           x += charKern unless c == 0
           letter = drawLetter font.folded[char], svg, state
-          letter.group.translate x - letter.x, y - letter.y
+          letter.group.translate x - letter.x, y - letter.y +
+            (maxHeight.folded - letter.height) # bottom alignment
+          height = maxHeight.folded # letter.height
           letters.push letter
           x += letter.width
           xmax = Math.max xmax, x
-          dy = Math.max dy, letter.height
+          dy = Math.max dy, height
         else if char == ' '
           x += charSpace
       y += dy + lineKern
