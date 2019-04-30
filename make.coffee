@@ -1,6 +1,8 @@
 #!/usr/bin/coffee
 fs = require 'fs'
 path = require 'path'
+stringify = require 'json-stringify-pretty-compact'
+#stringify = JSON.stringify
 
 font = {folded: {}, unfolded: {}}
 
@@ -66,6 +68,6 @@ for subdir in subdirs
 
 out.push '</svg>\n'
 fs.writeFileSync 'font.svg', out.join('\n')
-fs.writeFileSync 'font.js', "window.font = #{JSON.stringify font};"
+fs.writeFileSync 'font.js', "window.font = #{stringify font};"
 
 console.log "Wrote font.svg and font.js with #{(x for x of font.folded).length} folded and #{(x for x of font.unfolded).length} unfolded symbols"
