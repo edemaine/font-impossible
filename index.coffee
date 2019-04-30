@@ -16,7 +16,6 @@ drawLetter = (char, svg, state) ->
       group.use().attr 'href', "font.svg##{letter.id}"
       .y height += fontSep
       width = Math.max width, letter.width
-      #height = Math.max height, letter.height
       height += letter.height
   group: group
   x: 0
@@ -87,8 +86,8 @@ window?.onload = ->
     do (checkbox) ->
       document.getElementById(checkbox+'-alone').addEventListener 'click', ->
         for other in checkAlone when other != checkbox
-          document.getElementById(other).checked = false
-        document.getElementById(checkbox).checked = true
+          furls.set other, false
+        furls.set checkbox, true
         #updateTextSoon()
 
   window.addEventListener 'resize', resize
