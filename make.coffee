@@ -13,7 +13,8 @@ out = ['''
 ''']
 
 root = 'svg'
-subdirs = ['upper', 'lower', 'num']
+#subdirs = ['upper', 'lower', 'num']
+subdirs = ['upper', 'num']
 for subdir in subdirs
   dir = path.join root, subdir
   files = fs.readdirSync dir
