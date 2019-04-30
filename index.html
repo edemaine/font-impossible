@@ -36,12 +36,19 @@
           <LABEL FOR="text">Enter text to render:</LABEL> &nbsp;
           <TEXTAREA NAME="text" ID="text" ROWS=4 COLS=40>text</TEXTAREA>
         </TD>
-        <TD STYLE="text-align: left">
-          <INPUT NAME="rotateU" TYPE="checkbox" ID="rotateU"><LABEL FOR="rotateU">Rotate U</LABEL>
-          <BR>
-          <INPUT NAME="rotateI" TYPE="checkbox" ID="rotateI"><LABEL FOR="rotateI">Rotate I</LABEL>
-          <BR>
-          <INPUT NAME="anim" TYPE="checkbox" ID="anim"><LABEL FOR="anim">Animate rotations</LABEL>
+        <TD>
+          <TABLE>
+            <TR>
+              <TD>
+                <INPUT ID="unfolded" TYPE="checkbox"/><LABEL FOR="cp">Unfolded</LABEL>
+              <TD>
+                <BUTTON ID="unfolded-alone">Alone</BUTTON>
+            <TR>
+              <TD>
+                <INPUT ID="folded" TYPE="checkbox"/><LABEL FOR="steps">Folded</LABEL>
+              <TD>
+                <BUTTON ID="folded-alone">Alone</BUTTON>
+          </TABLE>
         </TD>
       </TR>
     </TABLE>

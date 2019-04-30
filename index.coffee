@@ -1,54 +1,56 @@
 margin = 10
 charKern = 25
 charSpace = 65
-lineKern = 45
-
-maxHeight = {}
-for fontName, subfont of font
-  maxHeight[fontName] = Math.max (
-    for char, letter of subfont
-      letter.height
-  )...
-console.log maxHeight
+lineKern = 30
+fontSep = 20
 
 svg = null
 
 drawLetter = (char, svg, state) ->
-  group = svg.use().attr 'href', "font.svg##{char.id}"
-  #y = 100 - char.height
+  neither = not state.folded and not state.unfolded
+  group = svg.group()
+  width = height = 0
+  for subfont in ['folded', 'unfolded']
+    if (state[subfont] or neither) and char of window.font[subfont]
+      letter = window.font[subfont][char]
+      group.use().attr 'href', "font.svg##{letter.id}"
+      .y height += fontSep
+      width = Math.max width, letter.width
+      #height = Math.max height, letter.height
+      height += letter.height
   group: group
   x: 0
-  y: 0#-y
-  width: char.width
-  height: char.height
+  y: 0
+  width: width
+  height: height
 
 stop = ->
-letters = null
 
 updateText = (changed) ->
   state = @getState()
-  if changed.text
-    letters = []
+  if changed.text or changed.unfolded or changed.folded
     svg.clear()
     y = 0
     xmax = 0
     for line in state.text.split '\n'
       x = 0
       dy = 0
+      row = []
       for char, c in line
         char = char.toUpperCase()
-        if char of font.folded
+        if char of window.font.folded or char of window.font.unfolded
           x += charKern unless c == 0
-          letter = drawLetter font.folded[char], svg, state
-          letter.group.translate x - letter.x, y - letter.y +
-            (maxHeight.folded - letter.height) # bottom alignment
-          height = maxHeight.folded # letter.height
-          letters.push letter
+          letter = drawLetter char, svg, state
+          letter.group.move x - letter.x, y - letter.y
+          row.push letter
           x += letter.width
           xmax = Math.max xmax, x
-          dy = Math.max dy, height
+          dy = Math.max dy, letter.height
         else if char == ' '
           x += charSpace
+      ## Bottom alignment
+      for letter in row
+        letter.group.dy dy - letter.height
       y += dy + lineKern
     svg.viewbox
       x: -margin
@@ -71,6 +73,8 @@ resize = ->
   height = Math.max 100, window.innerHeight - offset.y
   document.getElementById('output').style.height = "#{height}px"
 
+checkAlone = ['unfolded', 'folded']
+
 furls = null
 window?.onload = ->
   svg = SVG 'output'
@@ -78,6 +82,14 @@ window?.onload = ->
   .addInputs()
   .on 'stateChange', updateText
   .syncState()
+
+  for checkbox in checkAlone
+    do (checkbox) ->
+      document.getElementById(checkbox+'-alone').addEventListener 'click', ->
+        for other in checkAlone when other != checkbox
+          document.getElementById(other).checked = false
+        document.getElementById(checkbox).checked = true
+        #updateTextSoon()
 
   window.addEventListener 'resize', resize
   resize()
