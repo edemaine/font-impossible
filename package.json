@@ -1,0 +1,16 @@
+{
+  "name": "impossible",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "furls": "^0.2.0",
+    "svg.js": "^2.6.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Erik Demaine",
+  "license": "MIT"
+}

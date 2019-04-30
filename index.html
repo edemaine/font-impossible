@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+  <HEAD>
+    <TITLE>Impossible Folding Font</TITLE>
+    <SCRIPT TYPE="text/javascript" src="node_modules/svg.js/dist/svg.min.js"></SCRIPT>
+    <SCRIPT TYPE="text/javascript" src="node_modules/furls/furls.js"></SCRIPT>
+    <SCRIPT TYPE="text/javascript" src="font.js"></SCRIPT>
+    <SCRIPT TYPE="text/javascript" src="index.js"></SCRIPT>
+    <STYLE TYPE="text/css">
+      #warnings { background: red; color: yellow; padding: 1ex; display: none; }
+      @media print {
+        .noprint { display: none; }
+      }
+      TD { text-align: center; }
+      TEXTAREA { vertical-align: middle; }
+
+      path, line { fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:7.7px; }
+
+    </STYLE>
+    <!--#include virtual="../../analytics.html"-->
+  </HEAD>
+  <BODY>
+    <TABLE WIDTH="100%">
+      <TR>
+        <TD STYLE="text-align: left; vertical-align: middle;">
+          <H1>Impossible Folding Font</H1>
+        <TD STYLE="text-align: right; vertical-align: middle;">
+          <H2>by <A HREF="http://erikdemaine.org/">Erik Demaine</A>, <A HREF="http://martindemaine.org">Martin Demaine</A>, Tomoko Taniguchi, and <A HREF="https://www.jaist.ac.jp/~uehara/index-e.html">Ryuhei Uehara</A>, 2019</H2>
+    </TABLE>
+
+    <TABLE id="data" WIDTH="100%" CLASS="noprint">
+      <TR>
+        <TD>
+          <LABEL FOR="text">Enter text to render:</LABEL> &nbsp;
+          <TEXTAREA NAME="text" ID="text" ROWS=4 COLS=40>text</TEXTAREA>
+        </TD>
+        <TD STYLE="text-align: left">
+          <INPUT NAME="rotateU" TYPE="checkbox" ID="rotateU"><LABEL FOR="rotateU">Rotate U</LABEL>
+          <BR>
+          <INPUT NAME="rotateI" TYPE="checkbox" ID="rotateI"><LABEL FOR="rotateI">Rotate I</LABEL>
+          <BR>
+          <INPUT NAME="anim" TYPE="checkbox" ID="anim"><LABEL FOR="anim">Animate rotations</LABEL>
+        </TD>
+      </TR>
+    </TABLE>
+
+    <P>
+
+    <DIV id="output" STYLE="width: 100%">
+    </DIV>
+
+    <HR>
+
+    <P>
+    Check out <A HREF="http://erikdemaine.org/fonts/">other mathematical and
+    puzzle fonts</A>. &bull; Feedback or not working?
+    <A HREF="mailto:edemaine+fonts@mit.edu">Email Erik</A>.
+  </BODY>
+</HTML>
