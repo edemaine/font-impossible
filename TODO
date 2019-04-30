@@ -1,5 +1,5 @@
 * fix gradients
 * lower case
-* horizontal centering
-* Q should drop below baseline
-* maybe play with scale?
+* horizontal centering between unfolded/folded rows
+* Q should drop below baseline; probably swap unfolded and folded rows
+* A, U should have similar negative horizontal shift to overlap previous letter
