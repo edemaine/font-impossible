@@ -1,4 +1,4 @@
-margin = 10
+margin = 70
 charKern = 25
 charSpace = 85
 lineKern = 50
