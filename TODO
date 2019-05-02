@@ -1,6 +1,6 @@
 * change 2 checkbox interface to 3 radios (and fix radios)
 * fix gradients
-* lower case
+* lower case?
 * horizontal centering between unfolded/folded rows
 * Q should drop below baseline; probably swap unfolded and folded rows
 * A, 4, U, 6 should have similar negative horizontal shift to overlap previous letter

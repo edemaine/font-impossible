@@ -11,6 +11,7 @@ out = ['''
   <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1">
 
 ''']
+defs = []
 
 root = 'svg'
 #subdirs = ['upper', 'lower', 'num']
@@ -36,10 +37,14 @@ for subdir in subdirs
     .replace /<sodipodi:namedview[^<>]*\/>\s*/g, ''
     .replace /<sodipodi:namedview[^]*?<\/sodipodi:namedview>\s*/g, ''
     .replace /<metadata[^]*?<\/metadata>\s*/g, ''
-    .replace /<defs[^<>]*\/>\s*/g, ''
     .replace /xlink:href/g, 'href'
+    #.replace /url\(#/g, 'url(font.svg#'
     .replace /inkscape:(collect|label|groupmode|connector-curvature|transform-center-[xy])="[^"]*"\s*/g, ''
     .replace /sodipodi:nodetypes="[^"]*"\s*/g, ''
+    .replace /<defs[^<>]*\/>\s*/g, ''
+    .replace /<defs[^<>]*>([^]*?)<\/defs>\s*/g, (match, def) ->
+      defs.push def
+      ''
     .replace /\bid="[^"]*"\s*/g, ''
     .replace /<svg[^<>]*>/, (match) ->
       width = /width="([^"]*?)mm"/.exec match
@@ -66,6 +71,11 @@ for subdir in subdirs
       width: parseFloat width
       height: parseFloat height
       id: id
+
+## Prepend <def>s (with gradients) embedded within SVGs.
+defs.unshift '<defs>'
+defs.push '</defs>'
+out[1...1] = defs
 
 out.push '</svg>\n'
 fs.writeFileSync 'font.svg', out.join('\n')
