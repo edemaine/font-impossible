@@ -10,13 +10,17 @@ drawLetter = (char, svg, state) ->
   neither = not state.folded and not state.unfolded
   group = svg.group()
   width = height = 0
-  for subfont in ['folded', 'unfolded']
-    if (state[subfont] or neither) and char of window.font[subfont]
-      letter = window.font[subfont][char]
-      group.use().attr 'href', "font.svg##{letter.id}"
-      .y height += fontSep
-      width = Math.max width, letter.width
-      height += letter.height
+  letters =
+    for subfont in ['folded', 'unfolded'] \
+    when (state[subfont] or neither) and char of window.font[subfont]
+      window.font[subfont][char]
+  for letter, i in letters
+    use = group.use().attr 'href', "font.svg##{letter.id}"
+    .y height += fontSep
+    if letters.length == 2 and letter.width < letters[1-i].width
+      use.x (letters[1-i].width - letter.width)/2
+    width = Math.max width, letter.width
+    height += letter.height
   group: group
   x: 0
   y: 0
