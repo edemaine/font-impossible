@@ -1,8 +1,13 @@
 margin = 10
 charKern = 25
 charSpace = 65
-lineKern = 30
-fontSep = 20
+lineKern = 50
+fontSep = 25
+
+fullCharHeight = 172.35469
+## Q extends below baseline
+window.font.folded.Q.depth = window.font.folded.Q.height - fullCharHeight
+window.font.folded.A.lead = 262.693
 
 svg = null
 
@@ -11,16 +16,18 @@ drawLetter = (char, svg, state) ->
   group = svg.group()
   width = height = 0
   letters =
-    for subfont in ['folded', 'unfolded'] \
+    for subfont in ['unfolded', 'folded'] \
     when (state[subfont] or neither) and char of window.font[subfont]
       window.font[subfont][char]
   for letter, i in letters
+    height += fontSep if i > 0
     use = group.use().attr 'href', "font.svg##{letter.id}"
-    .y height += fontSep
+    .y height - (letter.height - fullCharHeight) + (letter.depth ? 0)
     if letters.length == 2 and letter.width < letters[1-i].width
       use.x (letters[1-i].width - letter.width)/2
     width = Math.max width, letter.width
-    height += letter.height
+    #height += letter.height - (letter.depth ? 0)
+    height += fullCharHeight
   group: group
   x: 0
   y: 0
@@ -53,7 +60,7 @@ updateText = (changed) ->
           x += charSpace
       ## Bottom alignment
       for letter in row
-        letter.group.dy dy - letter.height
+        letter.group.last().dy dy - letter.height
       y += dy + lineKern
     svg.viewbox
       x: -margin

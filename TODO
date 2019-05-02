@@ -1,5 +1,4 @@
 * change 2 checkbox interface to 3 radios (and fix radios)
-* fix gradients
+* fix gradients in Chrome
 * lower case?
-* Q should drop below baseline; probably swap unfolded and folded rows
 * A, H, N, U, W, Y, 4, 6 should have similar negative horizontal shift to overlap previous letter
