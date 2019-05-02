@@ -1,13 +1,20 @@
 margin = 10
 charKern = 25
-charSpace = 65
+charSpace = 85
 lineKern = 50
 fontSep = 25
 
 fullCharHeight = 172.35469
 ## Q extends below baseline
 window.font.folded.Q.depth = window.font.folded.Q.height - fullCharHeight
-window.font.folded.A.lead = 262.693
+window.font.folded.A.lead = 69.504
+window.font.folded.H.lead = 27.171
+window.font.folded.N.lead = 27.171
+window.font.folded.U.lead = 26.897
+window.font.folded.W.lead = 27.171
+window.font.folded.Y.lead = 27.568
+window.font.folded['4'].lead = 63.500
+window.font.folded['6'].lead = 21.167
 
 svg = null
 
@@ -23,9 +30,13 @@ drawLetter = (char, svg, state) ->
     height += fontSep if i > 0
     use = group.use().attr 'href', "font.svg##{letter.id}"
     .y height - (letter.height - fullCharHeight) + (letter.depth ? 0)
-    if letters.length == 2 and letter.width < letters[1-i].width
-      use.x (letters[1-i].width - letter.width)/2
-    width = Math.max width, letter.width
+    lead = letter.lead ? 0
+    letterWidth = letter.width - lead
+    if letters.length == 2 and letterWidth < letters[1-i].width - (letters[1-i].lead ? 0)
+      use.x (letters[1-i].width - letterWidth)/2 - lead
+    else
+      use.x -lead
+    width = Math.max width, letterWidth
     #height += letter.height - (letter.depth ? 0)
     height += fullCharHeight
   group: group

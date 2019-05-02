@@ -1,4 +1,3 @@
 * change 2 checkbox interface to 3 radios (and fix radios)
 * fix gradients in Chrome
 * lower case?
-* A, H, N, U, W, Y, 4, 6 should have similar negative horizontal shift to overlap previous letter
