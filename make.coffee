@@ -12,6 +12,7 @@ out = ['''
 
 ''']
 defs = []
+nextId = 0
 
 root = 'svg'
 #subdirs = ['upper', 'lower', 'num']
@@ -31,6 +32,7 @@ for subdir in subdirs
 
     width = height = null
     id = "#{folded[0]}#{subdir[0]}#{letter}"
+    idMap = {}
     svg = fs.readFileSync fullFile, encoding: 'utf8'
     .replace /^<\?xml[^]*?\?>\s*/, ''
     .replace /^<!--[^]*?-->\s*/, ''
@@ -38,14 +40,25 @@ for subdir in subdirs
     .replace /<sodipodi:namedview[^]*?<\/sodipodi:namedview>\s*/g, ''
     .replace /<metadata[^]*?<\/metadata>\s*/g, ''
     .replace /xlink:href/g, 'href'
-    #.replace /url\(#/g, 'url(font.svg#'
+    .replace /\bid="([^"]*)"\s*/g, (match, id) ->
+      if id.startsWith 'linearGradient'
+        match
+      else
+        ''
     .replace /inkscape:(collect|label|groupmode|connector-curvature|transform-center-[xy])="[^"]*"\s*/g, ''
     .replace /sodipodi:nodetypes="[^"]*"\s*/g, ''
+    .replace /\s*>/g, '>'
     .replace /<defs[^<>]*\/>\s*/g, ''
     .replace /<defs[^<>]*>([^]*?)<\/defs>\s*/g, (match, def) ->
+      def = def.replace /\bid="([^"]*)"/g, (match2, oldId) ->
+        idMap[oldId] = "d#{nextId}"
+        "id=\"d#{nextId++}\""
+      .replace (new RegExp "href=\"#(#{(key for key of idMap).join '|'})\"", 'g'),
+        (match, oldId) -> "href=\"##{idMap[oldId]}\""
       defs.push def
       ''
-    .replace /\bid="[^"]*"\s*/g, ''
+    .replace (new RegExp "url\\(#(#{(key for key of idMap).join '|'})\\)", 'g'),
+      (match, oldId) -> "url(##{idMap[oldId]})"
     .replace /<svg[^<>]*>/, (match) ->
       width = /width="([^"]*?)mm"/.exec match
       height = /height="([^"]*?)mm"/.exec match
