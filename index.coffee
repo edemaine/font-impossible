@@ -56,7 +56,8 @@ updateText = (changed) ->
     dy = 0
     row = []
     for char, c in line
-      char = char.toUpperCase()
+      unless state.lowercase
+        char = char.toUpperCase()
       if char of window.font.folded or char of window.font.unfolded
         x += charKern unless c == 0
         letter = drawLetter char, svg, state

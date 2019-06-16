@@ -16,8 +16,7 @@ gradientDark = {}
 nextId = 0
 
 root = 'svg'
-#subdirs = ['upper', 'lower', 'num']
-subdirs = ['upper', 'num']
+subdirs = ['upper', 'lower', 'num']
 for subdir in subdirs
   dir = path.join root, subdir
   files = fs.readdirSync dir
