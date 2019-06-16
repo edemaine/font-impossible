@@ -12,6 +12,7 @@ out = ['''
 
 ''']
 defs = []
+gradientDark = {}
 nextId = 0
 
 root = 'svg'
@@ -56,9 +57,25 @@ for subdir in subdirs
       .replace (new RegExp "href=\"#(#{(key for key of idMap).join '|'})\"", 'g'),
         (match, oldId) -> "href=\"##{idMap[oldId]}\""
       defs.push def
+      ## Compute darkest color of each gradient
+      gradientRe = /<linearGradient[^<>]*id="([^"]*)"[^<>/]*>([^]*?)<\/linearGradient>/g
+      while gradient = gradientRe.exec def
+        gradientId = gradient[1]
+        stopRe = /stop-color\s*:\s*(#[a-fA-F0-9]+)/g
+        while stop = stopRe.exec gradient
+          unless gradientDark[gradientId]? and gradientDark[gradientId] < stop[1]
+            gradientDark[gradientId] = stop[1]
+      gradientRe = /<linearGradient[^<>]*id="([^"]*)"[^<>/]*\/>/g
+      while gradient = gradientRe.exec def
+        gradientId = gradient[1]
+        href = /href\s*=\s*"#([^"]*)"/.exec gradient[0]
+        gradientDark[gradientId] = gradientDark[href[1]]
       ''
     .replace (new RegExp "url\\(#(#{(key for key of idMap).join '|'})\\)", 'g'),
-      (match, oldId) -> "url(##{idMap[oldId]})"
+      (match, oldId) -> "url(##{idMap[oldId]})" +
+        ## Use darkest color of gradient as fallback color (for Chrome with bug
+        ## https://bugs.chromium.org/p/chromium/issues/detail?id=572685)
+        if gradientDark[idMap[oldId]]? then " #{gradientDark[idMap[oldId]]}" else ""
     .replace /<svg[^<>]*>/, (match) ->
       width = /width="([^"]*?)mm"/.exec match
       height = /height="([^"]*?)mm"/.exec match
