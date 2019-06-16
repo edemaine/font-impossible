@@ -7,6 +7,11 @@ fontSep = 25
 fullCharHeight = 172.35469
 ## Q extends below baseline
 window.font.folded.Q.depth = window.font.folded.Q.height - fullCharHeight
+window.font.folded.g.depth = 42.333
+window.font.folded.j.depth = 42.333  # compromise
+window.font.folded.q.depth = 42.333
+#window.font.folded.y.depth = 63.5   # actual depth
+window.font.folded.y.depth = 42.333  # compromise to avoid overlap
 window.font.folded.A.lead = 69.504
 window.font.folded.H.lead = 27.171
 window.font.folded.N.lead = 27.171
@@ -15,6 +20,18 @@ window.font.folded.W.lead = 27.171
 window.font.folded.Y.lead = 27.568
 window.font.folded['4'].lead = 63.500
 window.font.folded['6'].lead = 21.167
+window.font.folded.d.lead = 27.146
+window.font.folded.g.lead = 37.764
+window.font.folded.h.lead = 21.167
+window.font.folded.k.lead = 21.167
+window.font.folded.m.lead = 21.167
+window.font.folded.n.lead = 10.583
+window.font.folded.p.lead = 63.5
+window.font.folded.q.lead = 21.167
+window.font.folded.u.lead = 31.75
+window.font.folded.w.lead = 63.5
+window.font.folded.y.lead = 63.5
+window.font.folded.z.lead = 21.167
 
 svg = null
 
