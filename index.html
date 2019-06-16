@@ -13,7 +13,6 @@
       @media print {
         .noprint { display: none; }
       }
-      TD { text-align: center; }
       TEXTAREA { vertical-align: middle; }
 
       path, line { fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:7.7px; }
@@ -37,18 +36,9 @@
           <TEXTAREA NAME="text" ID="text" ROWS=4 COLS=40>text</TEXTAREA>
         </TD>
         <TD>
-          <TABLE>
-            <TR>
-              <TD>
-                <INPUT ID="folded" TYPE="checkbox" CHECKED/><LABEL FOR="folded">Folded</LABEL>
-              <TD>
-                <BUTTON ID="folded-alone">Alone</BUTTON>
-            <TR>
-              <TD>
-                <INPUT ID="unfolded" TYPE="checkbox" CHECKED/><LABEL FOR="unfolded">Unfolded</LABEL>
-              <TD>
-                <BUTTON ID="unfolded-alone">Alone</BUTTON>
-          </TABLE>
+          <INPUT ID="folded" NAME="font" VALUE="folded" TYPE="radio"><LABEL FOR="folded">Folded 3D form (impossible font)</LABEL><BR>
+          <INPUT ID="unfolded" NAME="font" VALUE="unfolded" TYPE="radio"><LABEL FOR="unfolded">Unfolded crease/cut pattern (puzzle font)</LABEL><BR>
+          <INPUT ID="both" NAME="font" VALUE="both" TYPE="radio" CHECKED><LABEL FOR="both">Both folded and unfolded</LABEL>
         </TD>
       </TR>
     </TABLE>
