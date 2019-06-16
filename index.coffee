@@ -120,5 +120,10 @@ window?.onload = ->
   .on 'stateChange', updateText
   .syncState()
 
+  document.getElementById('links').innerHTML = (
+    for char, letter of font.unfolded
+      """<a href="#{letter.filename}">#{char}</a>"""
+  ).join ', '
+
   window.addEventListener 'resize', resize
   resize()

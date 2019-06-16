@@ -100,6 +100,7 @@ for subdir in subdirs
       width: parseFloat width
       height: parseFloat height
       id: id
+      filename: fullFile
 
 ## Prepend <def>s (with gradients) embedded within SVGs.
 defs.unshift '<defs>'
