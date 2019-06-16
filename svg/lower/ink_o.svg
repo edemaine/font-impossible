@@ -48,7 +48,7 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
+     inkscape:zoom="2.8"
      inkscape:cx="130.65179"
      inkscape:cy="380.41912"
      inkscape:document-units="mm"
@@ -110,8 +110,9 @@
        y="54.000591" />
     <path
        style="fill:url(#linearGradient34632);fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 84.779516,53.733319 10.58333,-31.75 v 84.666661 l -10.58333,31.75 V 53.733319"
+       d="m 95.362846,21.983319 v 84.666661 l -10.58333,31.75 V 53.733319 Z"
        id="path5616"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
   </g>
 </svg>

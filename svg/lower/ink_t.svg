@@ -123,8 +123,9 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:url(#linearGradient37591);fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 116.41666,64.166672 21.16667,-63.49999 v 84.66666 L 116.41666,148.83334 V 64.166672"
+       d="m 137.58333,0.666682 v 84.66666 L 116.41666,148.83334 V 64.166672 Z"
        id="path5329"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
   </g>
 </svg>
