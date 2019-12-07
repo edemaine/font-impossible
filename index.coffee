@@ -61,8 +61,6 @@ drawLetter = (char, svg, state) ->
   width: width
   height: height
 
-stop = ->
-
 updateText = (changed) ->
   state = @getState()
   svg.clear()
