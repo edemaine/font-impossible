@@ -113,6 +113,82 @@ resize = ->
   height = Math.max 100, window.innerHeight - offset.y
   document.getElementById('output').style.height = "#{height}px"
 
+download = (svg, filename) ->
+  document.getElementById('download').href = URL.createObjectURL \
+    new Blob [svg], type: "image/svg+xml"
+  document.getElementById('download').download = filename
+  document.getElementById('download').click()
+
+## Origami Simulator
+simulator = null
+ready = false
+onReady = null
+checkReady = ->
+  if ready
+    onReady?()
+    onReady = null
+window.addEventListener 'message', (e) ->
+  if e.data and e.data.from == 'OrigamiSimulator' and e.data.status == 'ready'
+    ready = true
+    checkReady()
+simulate = (svg) ->
+  if simulator? and not simulator.closed
+    simulator.focus()
+  else
+    ready = false
+    #simulator = window.open 'OrigamiSimulator/?model=', 'simulator'
+    simulator = window.open 'https://origamisimulator.org/?model=', 'simulator'
+  onReady = -> simulator.postMessage
+    op: 'importSVG'
+    svg: svg
+    vertTol: 0.1
+    filename: 'strip-simulate.svg'
+  , '*'
+  checkReady()
+
+svgPrefixId = (svg, prefix = 'N') ->
+  svg.replace /\b(id\s*=\s*")([^"]*")/gi, "$1#{prefix}$2"
+  .replace /\b(xlink:href\s*=\s*"#)([^"]*")/gi, "$1#{prefix}$2"
+
+cleanupSVG = (svg) -> svg
+simulateSVG = (svg) ->
+  explicit = SVG().addTo '#output'
+  try
+    explicit.svg svgPrefixId svg.svg(), ''
+    ## Expand <use> into duplicate copies with translation
+    explicit.find 'use'
+    .each ->
+      replacement = document.getElementById @attr('xlink:href').replace /^#/, ''
+      replacement = null if replacement?.id.startsWith 'f' # remove folded
+      unless replacement?  # reference to non-existing object
+        return @remove()
+      replacement = SVG replacement
+      viewbox = replacement.attr('viewBox') ? ''
+      viewbox = viewbox.split /\s+/
+      viewbox = (parseFloat n for n in viewbox)
+      replacement = svgPrefixId replacement.svg()
+      replacement = replacement.replace /<symbol\b/, '<g'
+      replacement = explicit.group().svg replacement
+      ## First transform according to `transform`, then translate by `x`, `y`
+      replacement.translate \
+        (@attr('x') or 0) - (viewbox[0] or 0),
+        (@attr('y') or 0) - (viewbox[1] or 0)
+      #replacement.translate (@attr('x') or 0), (@attr('y') or 0)
+      replacement.attr 'viewBox', null
+      replacement.attr 'id', null
+      #console.log 'replaced', @attr('xlink:href'), 'with', replacement.svg()
+      @replace replacement
+    ## Delete now-useless <symbol>s
+    explicit.find 'symbol'
+    .each ->
+      @clear()
+    explicit.svg()
+    ## Remove surrounding <svg>...</svg> from explicit SVG container
+    .replace /^<svg[^<>]*>/, ''
+    .replace /<\/svg>$/, ''
+  finally
+    explicit.remove()
+
 checkAlone = ['unfolded', 'folded']
 
 furls = null
@@ -139,3 +215,10 @@ window?.onload = ->
     svg.node.innerHTML = fontSVG
     svgTop = svg.group()
     furls.trigger 'stateChange'
+
+  document.getElementById('downloadSVG')?.addEventListener 'click', ->
+    download cleanupSVG(svg.svg()), 'impossible.svg'
+  document.getElementById('downloadSim')?.addEventListener 'click', ->
+    download simulateSVG(svg), 'impossible-simulate.svg'
+  document.getElementById('simulate')?.addEventListener 'click', ->
+    simulate simulateSVG svg
