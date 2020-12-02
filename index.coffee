@@ -35,6 +35,10 @@ window.font.folded.z.lead = 21.167
 
 svg = null
 
+letterURL = (letter) ->
+  #"font.svg##{letter.id}"
+  "##{letter.id}"
+
 drawLetter = (char, svg, state) ->
   group = svg.group()
   width = height = 0
@@ -44,7 +48,7 @@ drawLetter = (char, svg, state) ->
       window.font[subfont][char]
   for letter, i in letters
     height += fontSep if i > 0
-    use = group.use().attr 'href', "font.svg##{letter.id}"
+    use = group.use().attr 'href', letterURL letter
     .y height - (letter.height - fullCharHeight) + (letter.depth ? 0)
     lead = letter.lead ? 0
     letterWidth = letter.width - lead
@@ -125,3 +129,9 @@ window?.onload = ->
 
   window.addEventListener 'resize', resize
   resize()
+
+  ## Inline symbols and gradients from font.svg into output <svg>
+  fetch 'font.svg'
+  .then (response) -> response.text()
+  .then (fontSVG) ->
+    svg.node.innerHTML = fontSVG + svg.node.innerHTML
