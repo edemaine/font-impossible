@@ -76,7 +76,7 @@ updateText = (changed) ->
       if char of window.font.folded or char of window.font.unfolded
         x += charKern unless c == 0
         letter = drawLetter char, svg, state
-        letter.group.move x - letter.x, y - letter.y
+        letter.group.translate x - letter.x, y - letter.y
         row.push letter
         x += letter.width
         xmax = Math.max xmax, x
@@ -112,7 +112,7 @@ checkAlone = ['unfolded', 'folded']
 
 furls = null
 window?.onload = ->
-  svg = SVG 'output'
+  svg = SVG().addTo '#output'
   furls = new Furls()
   .addInputs()
   .on 'stateChange', updateText
