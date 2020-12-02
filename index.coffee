@@ -33,14 +33,14 @@ window.font.folded.w.lead = 63.5
 window.font.folded.y.lead = 63.5
 window.font.folded.z.lead = 21.167
 
-svg = null
+svg = svgTop = null
 
 letterURL = (letter) ->
   #"font.svg##{letter.id}"
   "##{letter.id}"
 
-drawLetter = (char, svg, state) ->
-  group = svg.group()
+drawLetter = (char, container, state) ->
+  group = container.group()
   width = height = 0
   letters =
     for subfont in ['unfolded', 'folded'] \
@@ -67,7 +67,8 @@ drawLetter = (char, svg, state) ->
 
 updateText = (changed) ->
   state = @getState()
-  svg.clear()
+  return unless svgTop?
+  svgTop.clear()
   y = 0
   xmax = 0
   for line in state.text.split '\n'
@@ -79,7 +80,7 @@ updateText = (changed) ->
         char = char.toUpperCase()
       if char of window.font.folded or char of window.font.unfolded
         x += charKern unless c == 0
-        letter = drawLetter char, svg, state
+        letter = drawLetter char, svgTop, state
         letter.group.translate x - letter.x, y - letter.y
         row.push letter
         x += letter.width
@@ -117,6 +118,7 @@ checkAlone = ['unfolded', 'folded']
 furls = null
 window?.onload = ->
   svg = SVG().addTo '#output'
+
   furls = new Furls()
   .addInputs()
   .on 'stateChange', updateText
@@ -134,4 +136,6 @@ window?.onload = ->
   fetch 'font.svg'
   .then (response) -> response.text()
   .then (fontSVG) ->
-    svg.node.innerHTML = fontSVG + svg.node.innerHTML
+    svg.node.innerHTML = fontSVG
+    svgTop = svg.group()
+    furls.trigger 'stateChange'
