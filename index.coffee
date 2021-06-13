@@ -1,7 +1,3 @@
-margin = 70
-charKern = 25
-charSpace = 85
-lineKern = 50
 fontSep = 25
 
 fullCharHeight = 172.35469
@@ -33,8 +29,6 @@ window.font.folded.w.lead = 63.5
 window.font.folded.y.lead = 63.5
 window.font.folded.z.lead = 21.167
 
-svg = svgTop = null
-
 letterURL = (letter) ->
   #"font.svg##{letter.id}"
   "##{letter.id}"
@@ -59,64 +53,11 @@ drawLetter = (char, container, state) ->
     width = Math.max width, letterWidth
     #height += letter.height - (letter.depth ? 0)
     height += fullCharHeight
-  group: group
-  x: 0
-  y: 0
+  element: group
+  #x: 0
+  #y: 0
   width: width
   height: height
-
-updateText = (changed) ->
-  state = @getState()
-  svgTop.clear()
-  y = 0
-  xmax = 0
-  for line in state.text.split '\n'
-    x = 0
-    dy = 0
-    row = []
-    for char, c in line
-      unless state.lowercase
-        char = char.toUpperCase()
-      if char of window.font.folded or char of window.font.unfolded
-        x += charKern unless c == 0
-        letter = drawLetter char, svgTop, state
-        letter.group.translate x - letter.x, y - letter.y
-        row.push letter
-        x += letter.width
-        xmax = Math.max xmax, x
-        dy = Math.max dy, letter.height
-      else if char == ' '
-        x += charSpace
-    ## Bottom alignment
-    for letter in row
-      letter.group.last().dy dy - letter.height
-    y += dy + lineKern
-  svg.viewbox
-    x: -margin
-    y: -margin
-    width: xmax + 2*margin
-    height: y + 2*margin
-
-## Based on meouw's answer on http://stackoverflow.com/questions/442404/retrieve-the-position-x-y-of-an-html-element
-getOffset = (el) ->
-  x = y = 0
-  while el and not isNaN(el.offsetLeft) and not isNaN(el.offsetTop)
-    x += el.offsetLeft - el.scrollLeft
-    y += el.offsetTop - el.scrollTop
-    el = el.offsetParent
-  x: x
-  y: y
-
-resize = ->
-  offset = getOffset document.getElementById('output')
-  height = Math.max 100, window.innerHeight - offset.y
-  document.getElementById('output').style.height = "#{height}px"
-
-download = (svg, filename) ->
-  document.getElementById('download').href = URL.createObjectURL \
-    new Blob [svg], type: "image/svg+xml"
-  document.getElementById('download').download = filename
-  document.getElementById('download').click()
 
 ## Origami Simulator
 simulator = null
@@ -188,27 +129,28 @@ simulateSVG = (svg) ->
   finally
     explicit.remove()
 
-furls = null
 window?.onload = ->
-  svg = SVG '#svg'
-  svgTop = svg.group()
-
-  furls = new Furls()
-  .addInputs()
-  .on 'stateChange', updateText
-  .syncState()
+  app = new FontWebappSVG
+    root: '#output'
+    rootSVG: '#svg'
+    margin: 70
+    charKern: 25
+    lineKern: 50
+    spaceWidth: 85
+    renderChar: (char, state) ->
+      unless state.lowercase
+        char = char.toUpperCase()
+      return unless char of window.font.folded or char of window.font.unfolded
+      drawLetter char, @renderGroup, state
 
   document.getElementById('links').innerHTML = (
     for char, letter of font.unfolded
       """<a href="#{letter.filename}">#{char}</a>"""
   ).join ', '
 
-  window.addEventListener 'resize', resize
-  resize()
-
   document.getElementById('downloadSVG')?.addEventListener 'click', ->
-    download cleanupSVG(svg.svg()), 'impossible.svg'
+    app.downloadSVG 'impossible.svg', cleanupSVG app.svg.svg()
   document.getElementById('downloadSim')?.addEventListener 'click', ->
-    download simulateSVG(svg), 'impossible-simulate.svg'
+    app.downloadSVG 'impossible-simulate.svg', simulateSVG app.svg
   document.getElementById('simulate')?.addEventListener 'click', ->
-    simulate simulateSVG svg
+    simulate simulateSVG app.svg
