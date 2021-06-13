@@ -67,7 +67,6 @@ drawLetter = (char, container, state) ->
 
 updateText = (changed) ->
   state = @getState()
-  return unless svgTop?
   svgTop.clear()
   y = 0
   xmax = 0
@@ -191,7 +190,8 @@ simulateSVG = (svg) ->
 
 furls = null
 window?.onload = ->
-  svg = SVG().addTo '#output'
+  svg = SVG '#svg'
+  svgTop = svg.group()
 
   furls = new Furls()
   .addInputs()
@@ -205,18 +205,6 @@ window?.onload = ->
 
   window.addEventListener 'resize', resize
   resize()
-
-  ## Inline symbols and gradients from font.svg into output <svg>
-  fetch 'font.svg'
-  .then (response) -> response.text()
-  .then (fontSVG) ->
-    fontSVG = fontSVG
-    .replace /<?[^<>]*?>/, ''
-    .replace /<svg[^<>]*>/, ''
-    .replace /<\/svg[^<>]*>/, ''
-    svg.node.innerHTML = fontSVG
-    svgTop = svg.group()
-    furls.trigger 'stateChange'
 
   document.getElementById('downloadSVG')?.addEventListener 'click', ->
     download cleanupSVG(svg.svg()), 'impossible.svg'

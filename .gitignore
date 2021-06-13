@@ -1,5 +1,7 @@
 font.js
 font.svg
+font-inline.svg
+index.html
 index.js
 node_modules
 package-lock.json

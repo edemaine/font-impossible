@@ -108,7 +108,8 @@ defs.push '</defs>'
 out[1...1] = defs
 
 out.push '</svg>\n'
-fs.writeFileSync 'font.svg', out.join('\n')
+fs.writeFileSync 'font.svg', out.join '\n'
+fs.writeFileSync 'font-inline.svg', out[1...-1].join '\n'
 fs.writeFileSync 'font.js', "window.font = #{stringify font};"
 
-console.log "Wrote font.svg and font.js with #{(x for x of font.folded).length} folded and #{(x for x of font.unfolded).length} unfolded symbols"
+console.log "Wrote font.svg, font-inline.svg, and font.js with #{(x for x of font.folded).length} folded and #{(x for x of font.unfolded).length} unfolded symbols"
