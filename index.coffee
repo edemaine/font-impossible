@@ -212,6 +212,10 @@ window?.onload = ->
   fetch 'font.svg'
   .then (response) -> response.text()
   .then (fontSVG) ->
+    fontSVG = fontSVG
+    .replace /<?[^<>]*?>/, ''
+    .replace /<svg[^<>]*>/, ''
+    .replace /<\/svg[^<>]*>/, ''
     svg.node.innerHTML = fontSVG
     svgTop = svg.group()
     furls.trigger 'stateChange'
