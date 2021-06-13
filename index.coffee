@@ -189,8 +189,6 @@ simulateSVG = (svg) ->
   finally
     explicit.remove()
 
-checkAlone = ['unfolded', 'folded']
-
 furls = null
 window?.onload = ->
   svg = SVG().addTo '#output'
