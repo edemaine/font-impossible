@@ -17,6 +17,9 @@ exports.coffee = coffee = ->
   .pipe gulpChmod 0o644
   .pipe gulp.dest './'
 
+## npm run build / npx gulp build: all of the above
+exports.build = build = gulp.series pug, coffee
+
 ## npm run watch / npx gulp watch: continuously update above
 exports.watch = watch = ->
   gulp.watch '*.pug', pug

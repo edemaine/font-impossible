@@ -1,7 +1,8 @@
 {
-  "name": "impossible",
+  "name": "font-impossible",
   "version": "0.0.1",
   "description": "",
+  "repository": "https://github.com/edemaine/font-impossible.git",
   "main": "index.js",
   "dependencies": {
     "@svgdotjs/svg.js": "^3.0.16",
@@ -18,6 +19,7 @@
     "jstransformer-stylus": "^1.5.0"
   },
   "scripts": {
+    "build": "gulp build",
     "pug": "gulp pug",
     "coffee": "gulp coffee",
     "watch": "gulp watch",
