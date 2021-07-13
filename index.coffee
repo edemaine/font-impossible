@@ -137,11 +137,11 @@ window?.onload = ->
     charKern: 25
     lineKern: 50
     spaceWidth: 85
-    renderChar: (char, state) ->
+    renderChar: (char, state, group) ->
       unless state.lowercase
         char = char.toUpperCase()
       return unless char of window.font.folded or char of window.font.unfolded
-      drawLetter char, @renderGroup, state
+      drawLetter char, group, state
 
   document.getElementById('links').innerHTML = (
     for char, letter of font.unfolded
