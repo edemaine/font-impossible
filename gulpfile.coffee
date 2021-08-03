@@ -22,8 +22,8 @@ exports.build = build = gulp.series pug, coffee
 
 ## npm run watch / npx gulp watch: continuously update above
 exports.watch = watch = ->
-  gulp.watch '*.pug', pug
+  gulp.watch '*.pug', ignoreInitial: false, pug
   gulp.watch 'font-inline.svg', pug
-  gulp.watch 'index.coffee', coffee
+  gulp.watch 'index.coffee', ignoreInitial: false, coffee
 
 exports.default = pug
